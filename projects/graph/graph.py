@@ -38,7 +38,7 @@ class Graph:
         Print each vertex in breadth-first order
         beginning from starting_vertex.
         """
-        print('*** bft ***')
+        # print('*** bft ***')
         q = Queue()
         visited = set()
         # queue up the starting vertex
@@ -66,7 +66,29 @@ class Graph:
         Print each vertex in depth-first order
         beginning from starting_vertex.
         """
-        pass  # TODO
+        # print('*** dft ***')
+        stack = Stack()
+        visited = set()
+        
+        # add the first item to the stack
+        stack.push(starting_vertex)
+        
+        while stack.size() > 0:
+            vertex = stack.pop()
+            
+            if vertex not in visited:
+            
+                # do something with this vertex
+                print(vertex)
+                
+                # add vertex to visited
+                visited.add(vertex)
+                
+                # add all the vertex's neighbors to the stack
+                neighbors = self.get_neighbors(vertex)
+                for neighbor in neighbors:
+                    stack.push(neighbor)
+        
 
     def dft_recursive(self, starting_vertex):
         """
