@@ -2,7 +2,7 @@
 def earliest_ancestor(ancestors, starting_node):
     # initialize the first path
     path = []
-    # the list of paths that are possible earliest ancestors
+    # the list of paths (list of lists) that are possible earliest ancestors
     complete_paths = []
     # recurse
     _earliest_ancestor(ancestors, starting_node, path, complete_paths)
@@ -36,11 +36,11 @@ def earliest_ancestor(ancestors, starting_node):
             break
     
     # next, find the lowest of the parents and return it
+    
+    # sort parents so that the lowest values are at the front
     possible_parents.sort()
+    # return the first (front, lowest-valued) parent
     return possible_parents[0]
-    
-    
-    
 
 def _earliest_ancestor(ancestors, starting_node, path, complete_paths):
     
