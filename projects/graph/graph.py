@@ -157,9 +157,35 @@ class Graph:
         starting_vertex to destination_vertex in
         depth-first order.
         """
-        pass  # TODO
+        paths = Stack()
+        visited = set()
+        
+        # add the first item to the stack
+        paths.push([starting_vertex])
+        
+        while paths.size() > 0:
+            path = paths.pop()
+            
+            # grab the last vertex off the path
+            vertex = path[-1]
+            
+            if vertex not in visited:
+                
+                # add vertex to visited
+                visited.add(vertex)
+                
+                if vertex == destination_vertex:
+                    return path
+                
+                # add all the vertex's neighbors to the stack
+                neighbors = self.get_neighbors(vertex)
+                for neighbor in neighbors:
+                    # create a copy of the path
+                    copied_path = list(path)
+                    copied_path.append(neighbor)
+                    paths.push(copied_path)
 
-    def dfs_recursive(self, starting_vertex, destination_vertex):
+    def dfs_recursive(self, starting_vertex, destination_vertex, visited=None, path=None):
         """
         Return a list containing a path from
         starting_vertex to destination_vertex in
@@ -167,8 +193,38 @@ class Graph:
 
         This should be done using recursion.
         """
-        pass  # TODO
-
+        if visited is None:
+            visited = set()
+            
+        if path is None:
+            path = []
+            
+        # make a copy of the path
+        # so the recursion doesn't write
+        # everything to the same path
+        copy_path = list(path)
+        
+        if starting_vertex not in visited:
+        
+            # add this to visited
+            visited.add(starting_vertex)
+            copy_path.append(starting_vertex)
+            
+            # do something with this vertex
+            if starting_vertex == destination_vertex:
+                return copy_path
+            
+            # start by getting this vertex's neighbors
+            neighbors = self.get_neighbors(starting_vertex)
+            
+            # if vertex has neighbors,
+            for neighbor in neighbors:
+                # recurse over each neighbor
+                recurse_path = self.dfs_recursive(neighbor, destination_vertex, visited, copy_path)
+                if recurse_path:
+                    return recurse_path
+        
+        return None
 if __name__ == '__main__':
     graph = Graph()  # Instantiate your graph
     # https://github.com/LambdaSchool/Graphs/blob/master/objectives/breadth-first-search/img/bfs-visit-order.png
@@ -179,6 +235,7 @@ if __name__ == '__main__':
     # graph.add_vertex(4)
     # graph.add_vertex(5)
     # graph.add_vertex(7)
+    # graph.add_vertex(8)
     
     # graph.add_edge(1, 2)
     # graph.add_edge(2, 3)
@@ -187,6 +244,8 @@ if __name__ == '__main__':
     # graph.add_edge(4, 5)
     # graph.add_edge(4, 7)
     # graph.add_edge(7, 6)
+    # graph.add_edge(6, 8)
+    # graph.add_edge(2, 8)
     
     graph.add_vertex(1)
     graph.add_vertex(2)
@@ -244,7 +303,7 @@ if __name__ == '__main__':
     Valid BFS path:
         [1, 2, 4, 6]
     '''
-    print(graph.bfs(1, 6))
+    #print(graph.bfs(1, 6))
 
     '''
     Valid DFS paths:
@@ -253,3 +312,5 @@ if __name__ == '__main__':
     '''
     print(graph.dfs(1, 6))
     print(graph.dfs_recursive(1, 6))
+    # print(graph.dfs(1, 8))
+    # print(graph.dfs_recursive(1, 8))
