@@ -140,11 +140,22 @@ if __name__ == '__main__':
     # sg.add_friendship(10, 2)
     # sg.add_friendship(10, 6)
     
-    print('\nFriendships')
-    print(sg.friendships)
-    print('\nConnections')
-    connections = sg.get_all_social_paths(1)
-    print(connections)
+    # print('\nFriendships')
+    # print(sg.friendships)
+    # print('\nConnections')
+    # connections = sg.get_all_social_paths(1)
+    # print(connections)
+    
+    # get percentage of other users in any given user's extended network
+    sg2 = SocialGraph()
+    sg2.populate_graph(1000, 5)
+    counts = []
+    for user in sg2.users:
+        # count the number of keys in each user's extended network
+        network = sg2.get_all_social_paths(user)
+        counts.append(len(network) -1) # -1 because network includes the user themselves
+        
+    print(counts)
 
 
 # TOP=MINE
