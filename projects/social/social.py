@@ -3,12 +3,12 @@ from util import Queue, Stack
 class User:
     def __init__(self, name):
         self.name = name
-
 class SocialGraph:
     def __init__(self):
         self.last_id = 0
         self.users = {}
         self.friendships = {}
+        self.add_friendship_count = 0
 
     def add_friendship(self, user_id, friend_id):
         """
@@ -21,6 +21,8 @@ class SocialGraph:
         else:
             self.friendships[user_id].add(friend_id)
             self.friendships[friend_id].add(user_id)
+            self.add_friendship_count += 1
+        
 
     def add_user(self, name):
         """
@@ -102,6 +104,11 @@ class SocialGraph:
 if __name__ == '__main__':
     sg = SocialGraph()
     sg.populate_graph(10, 2)
+    print('add friendship count: ', sg.add_friendship_count)
+    
+    # 100 * 10 / 2 = 500
+    # 200 * 20 / 2 = 2000
+    # 400 * 20 / 2 = 4000
     
     # sg.add_user(1)
     # sg.add_user(2)
@@ -132,6 +139,7 @@ if __name__ == '__main__':
     # sg.add_friendship(10, 1)
     # sg.add_friendship(10, 2)
     # sg.add_friendship(10, 6)
+    
     print('\nFriendships')
     print(sg.friendships)
     print('\nConnections')
